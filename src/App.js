@@ -49,7 +49,10 @@ function Calculator() {
   const [number, setNumber] = useState(0);
 
   function handleScreen(i) {
-    setNumber(i);
+    let new_number = number*10 + i
+    if (new_number < Math.pow(10, 8)) {
+      setNumber(new_number);
+    }
   }
 
   return (
