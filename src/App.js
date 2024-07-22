@@ -2,9 +2,9 @@ import logo from './logo.svg';
 import { useState } from 'react';
 import './App.css';
 
-function Number({ value , onNumberClick }) {
+function CalcButton({ value, onButtonClick }) {
   return (
-    <button className="square" onClick={ onNumberClick }>
+    <button className="square" onClick={ onButtonClick }>
       { value }
     </button>
   )
@@ -17,21 +17,31 @@ function Grid({ onScreen }) {
   }
 
   return (
-    <div className='number-grid'>
+    <div className='button-grid'>
       <div className='board-row'>
-        <Number value="1" onNumberClick={ () =>  handleNumberClick(1)  } />
-        <Number value="2" onNumberClick={ () =>  handleNumberClick(2)  } />
-        <Number value="3" onNumberClick={ () =>  handleNumberClick(3)  } />
+        <CalcButton value="=" onButtonClick={ () =>  handleNumberClick(1)  } />
+        <CalcButton value="+" onButtonClick={ () =>  handleNumberClick(1)  } />
+        <CalcButton value="-" onButtonClick={ () =>  handleNumberClick(1)  } />
+        <CalcButton value="*" onButtonClick={ () =>  handleNumberClick(1)  } />
+        <CalcButton value="/" onButtonClick={ () =>  handleNumberClick(1)  } />
       </div>
       <div className='board-row'>
-        <Number value="4" onNumberClick={ () =>  handleNumberClick(4)  } />
-        <Number value="5" onNumberClick={ () =>  handleNumberClick(5)  } />
-        <Number value="6" onNumberClick={ () =>  handleNumberClick(6)  } />
+        <CalcButton value="0" onButtonClick={ () =>  handleNumberClick(1)  } />
+        <CalcButton value="1" onButtonClick={ () =>  handleNumberClick(1)  } />
+        <CalcButton value="2" onButtonClick={ () =>  handleNumberClick(2)  } />
+        <CalcButton value="3" onButtonClick={ () =>  handleNumberClick(3)  } />
       </div>
       <div className='board-row'>
-        <Number value="7" onNumberClick={ () =>  handleNumberClick(7)  } />
-        <Number value="8" onNumberClick={ () =>  handleNumberClick(8)  } />
-        <Number value="9" onNumberClick={ () =>  handleNumberClick(9)  } />
+        <CalcButton value="C" onButtonClick={ () =>  handleNumberClick('clear')  } />
+        <CalcButton value="4" onButtonClick={ () =>  handleNumberClick(4)  } />
+        <CalcButton value="5" onButtonClick={ () =>  handleNumberClick(5)  } />
+        <CalcButton value="6" onButtonClick={ () =>  handleNumberClick(6)  } />
+      </div>
+      <div className='board-row'>
+        <CalcButton value="CA" onButtonClick={ () =>  handleNumberClick(1)  } />
+        <CalcButton value="7" onButtonClick={ () =>  handleNumberClick(7)  } />
+        <CalcButton value="8" onButtonClick={ () =>  handleNumberClick(8)  } />
+        <CalcButton value="9" onButtonClick={ () =>  handleNumberClick(9)  } />
       </div>
     </div>
   )
@@ -49,6 +59,10 @@ function Calculator() {
   const [number, setNumber] = useState(0);
 
   function handleScreen(i) {
+    if (i === 'clear') {
+      setNumber(0);
+      return;
+    }
     let new_number = number*10 + i
     if (new_number < Math.pow(10, 8)) {
       setNumber(new_number);
