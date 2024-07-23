@@ -18,11 +18,11 @@ function Grid({ onScreen }) {
   return (
     <div className='button-grid'>
       <div className='board-row'>
-        <CalcButton value="=" onButtonClick={ () =>  handleButtonClick('equal')  } />
-        <CalcButton value="+" onButtonClick={ () =>  handleButtonClick('add')  } />
-        <CalcButton value="-" onButtonClick={ () =>  handleButtonClick('minus')  } />
-        <CalcButton value="*" onButtonClick={ () =>  handleButtonClick('multiply')  } />
-        <CalcButton value="/" onButtonClick={ () =>  handleButtonClick('divide')  } />
+        <CalcButton value="=" onButtonClick={ () =>  handleButtonClick('=')  } />
+        <CalcButton value="+" onButtonClick={ () =>  handleButtonClick('+')  } />
+        <CalcButton value="-" onButtonClick={ () =>  handleButtonClick('-')  } />
+        <CalcButton value="*" onButtonClick={ () =>  handleButtonClick('*')  } />
+        <CalcButton value="/" onButtonClick={ () =>  handleButtonClick('/')  } />
       </div>
       <div className='board-row'>
         <CalcButton value="0" onButtonClick={ () =>  handleButtonClick(1)  } />
@@ -46,9 +46,10 @@ function Grid({ onScreen }) {
   )
 }
 
-function Screen({ number }) {
+function Screen({ number, expression }) {
   return (
     <div className='screen'>
+      <p id='expression'> { expression } </p>
       <p> { number } </p>
     </div>
   )
@@ -58,6 +59,7 @@ function Calculator() {
   const [operand1, setOperand1] = useState(0);
   const [operand2, setOperand2] = useState(0);
   const [operator, setOperator] = useState('');
+  const [expression, setExpression] = useState('');
 
   function handleScreen(i) {
     if (i === 'clear') {
@@ -68,6 +70,7 @@ function Calculator() {
     if (i === 'all_clear') {
       setOperand1(0);
       setOperand2(0);
+      setExpression('');
       return;
     }
 
@@ -78,13 +81,16 @@ function Calculator() {
         setOperand1(new_number);
       }
     } else {
-      if (i === 'equal') {
+      if (i === '=') {
         let result = calculateExpression(operand1, operand2, operator);
+        let new_string = expression + ' ' + operand1;
+        setExpression(new_string);
         setOperand1(result);
       } else {
         setOperand2(operand1);
-        setOperand1(0);
         setOperator(i)
+        setExpression(operand1 + ' ' + String(operator));
+        setOperand1(0);
       }
     }
  }
@@ -92,7 +98,7 @@ function Calculator() {
   return (
     <div className='container'>
       <div className='calculator'>
-        <Screen number={ operand1 } />
+        <Screen number={ operand1 } expression={ expression }/>
         <Grid onScreen={ handleScreen }/>
       </div>
     </div>
@@ -101,11 +107,11 @@ function Calculator() {
 
 function calculateExpression(op1, op2, operator) {
   // console.log(op2 + " " + operator + " " + op1)
-  if (operator === 'add') {
+  if (operator === '+') {
     return op2 + op1;
-  } else if (operator === 'minus') {
+  } else if (operator === '-') {
     return op2 - op1;
-  } else if (operator === 'multiply') {
+  } else if (operator === '*') {
     return op2 * op1;
   } else {
     return Math.floor(op2/op1);
