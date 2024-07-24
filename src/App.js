@@ -55,11 +55,26 @@ function Screen({ number, expression }) {
   )
 }
 
+function History({ history_list }) {
+
+  const listItems = history_list.map(expression => { 
+  return <li key={ expression.id }>{ expression.val }<br />{ expression.res }</li> 
+  });
+
+  return (
+    <div className='history'>
+      <ul>{ listItems }</ul>
+    </div>
+  )
+}
+
 function Calculator() {
   const [operand1, setOperand1] = useState(0);
   const [operand2, setOperand2] = useState(0);
   const [operator, setOperator] = useState('');
   const [expression, setExpression] = useState('');
+  const [history, setHistory] = useState([]);
+  const [expressionId, setExpressionId] = useState(1);
 
   function handleScreen(i) {
     if (i === 'clear') {
@@ -83,13 +98,20 @@ function Calculator() {
     } else {
       if (i === '=') {
         let result = calculateExpression(operand1, operand2, operator);
-        let new_string = expression + ' ' + operand1;
-        setExpression(new_string);
+        let exp_string = expression + ' ' + operand1;
+        setExpression(exp_string);
         setOperand1(result);
+        
+        const newItem = { id: expressionId, val: exp_string, res: "= " + result}
+        // const newItem = { id: expressionId, val: exp_string + " = " + result}
+        const nextHistory = [...history, newItem];
+        // const nextHistory = [...history, exp_string];
+        setHistory(nextHistory);
+        setExpressionId(expressionId + 1);
       } else {
         setOperand2(operand1);
         setOperator(i)
-        setExpression(operand1 + ' ' + String(operator));
+        setExpression(operand1 + ' ' + String(i));
         setOperand1(0);
       }
     }
@@ -100,6 +122,7 @@ function Calculator() {
       <div className='calculator'>
         <Screen number={ operand1 } expression={ expression }/>
         <Grid onScreen={ handleScreen }/>
+        <History history_list={ history } exp_id = { expressionId } />
       </div>
     </div>
   );

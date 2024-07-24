@@ -38,8 +38,6 @@
 }
 
 .screen {
-  border: 1px solid #282c34;
-  width: 100%;
 }
 
 .container {
@@ -50,21 +48,24 @@
 
 .calculator {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr; */
+  grid-template-columns: auto auto auto auto auto;
+  grid-template-rows: auto auto auto auto auto auto;
+  grid-auto-columns: auto;
+  grid-auto-flow: column;
   height: 400px;
 }
 
 .screen {
   /* height: 100%; */
+  border: 1px solid #282c34;
+  width: 100%;
+  height: 100px;
   grid-row: 1 / 3;
   grid-column: 1 / -1;
   margin-bottom: 10px;
 }
-
-/* .screen > p#expression {
-  height: 50%;
-} */
 
 .screen > p {
   height: 50%;
@@ -100,4 +101,32 @@
 .button-grid {
   grid-row: 3 / 7;
   grid-column: 1 / -1;
+}
+
+.history {
+  grid-row: 1 / -1;
+  border: 1px solid #282c34;
+  margin-left: 10px;
+  width: 400px;
+  overflow-y: scroll;
+}
+
+.history > ul {
+  font-size: 24px;
+  text-align: right;
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  /* margin: 10px; */
+}
+
+li {
+  margin: 5px 0;
+  padding: 10px;
+  /* border-style: solid; */
+  border-bottom: 1px solid;
+}
+
+li:last-child {
+  border-bottom: none;
 }
