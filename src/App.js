@@ -1,12 +1,28 @@
 import { useState } from 'react';
 import './App.css';
 
-function CalcButton({ value, onButtonClick }) {
-  return (
-    <button className="square" onClick={ onButtonClick }>
-      { value }
-    </button>
-  )
+function CalcButton({ value, onButtonClick , type }) {
+  
+  if (type === "operator") {
+    return (
+      <button className="square operator" onClick={ onButtonClick }>
+        { value }
+      </button>
+    )
+  } else if (type === "misc") {
+    return (
+      <button className="square misc" onClick={ onButtonClick }>
+        { value }
+      </button>
+    )
+  } else {
+    return (
+      <button className="square" onClick={ onButtonClick }>
+        { value }
+      </button>
+    )
+  }
+
 }
 
 function Grid({ onScreen }) {
@@ -18,11 +34,11 @@ function Grid({ onScreen }) {
   return (
     <div className='button-grid'>
       <div className='board-row'>
-        <CalcButton value="=" onButtonClick={ () =>  handleButtonClick('=')  } />
-        <CalcButton value="+" onButtonClick={ () =>  handleButtonClick('+')  } />
-        <CalcButton value="-" onButtonClick={ () =>  handleButtonClick('-')  } />
-        <CalcButton value="*" onButtonClick={ () =>  handleButtonClick('*')  } />
-        <CalcButton value="/" onButtonClick={ () =>  handleButtonClick('/')  } />
+        <CalcButton value="=" onButtonClick={ () =>  handleButtonClick('=')  } type="operator"/>
+        <CalcButton value="+" onButtonClick={ () =>  handleButtonClick('+')  } type="operator"/>
+        <CalcButton value="-" onButtonClick={ () =>  handleButtonClick('-')  } type="operator"/>
+        <CalcButton value="*" onButtonClick={ () =>  handleButtonClick('*')  } type="operator"/>
+        <CalcButton value="/" onButtonClick={ () =>  handleButtonClick('/')  } type="operator"/>
       </div>
       <div className='board-row'>
         <CalcButton value="0" onButtonClick={ () =>  handleButtonClick(1)  } />
@@ -31,13 +47,13 @@ function Grid({ onScreen }) {
         <CalcButton value="3" onButtonClick={ () =>  handleButtonClick(3)  } />
       </div>
       <div className='board-row'>
-        <CalcButton value="C" onButtonClick={ () =>  handleButtonClick('clear')  } />
+        <CalcButton value="C" onButtonClick={ () =>  handleButtonClick('clear')  } type="misc" />
         <CalcButton value="4" onButtonClick={ () =>  handleButtonClick(4)  } />
         <CalcButton value="5" onButtonClick={ () =>  handleButtonClick(5)  } />
         <CalcButton value="6" onButtonClick={ () =>  handleButtonClick(6)  } />
       </div>
       <div className='board-row'>
-        <CalcButton value="CA" onButtonClick={ () =>  handleButtonClick('all_clear')  } />
+        <CalcButton value="CA" onButtonClick={ () =>  handleButtonClick('all_clear')  } type="misc" />
         <CalcButton value="7" onButtonClick={ () =>  handleButtonClick(7)  } />
         <CalcButton value="8" onButtonClick={ () =>  handleButtonClick(8)  } />
         <CalcButton value="9" onButtonClick={ () =>  handleButtonClick(9)  } />
